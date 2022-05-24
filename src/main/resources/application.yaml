@@ -1,0 +1,17 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: keycloak-spring-boot
+
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: root
+    password: password
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8080/auth/realms/keycloak-spring-boot/protocol/openid-connect/certs
