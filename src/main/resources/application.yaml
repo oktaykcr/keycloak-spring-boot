@@ -15,3 +15,7 @@ spring:
       resourceserver:
         jwt:
           jwk-set-uri: http://localhost:8080/auth/realms/keycloak-spring-boot/protocol/openid-connect/certs
+
+  jpa:
+    hibernate:
+      ddl-auto: update #good for testing, comment this in production
