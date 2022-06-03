@@ -1,0 +1,49 @@
+version: '3.1'
+services:
+  app:
+    image: keycloak-spring-boot:0.0.1
+    container_name: keycloak-spring-boot
+    ports:
+      - "8081:8081"
+    depends_on:
+      - appdb
+      - keycloak
+
+  appdb:
+    image: postgres
+    container_name: keycloak-spring-boot-db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=root
+      - POSTGRES_DB=postgres
+
+  postgres:
+    image: postgres
+    container_name: keycloak-db
+    environment:
+      POSTGRES_DB: keycl0ak
+      POSTGRES_USER: keycl0ak
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5431:5431"
+
+  keycloak:
+    image: jboss/keycloak:latest
+    container_name: keycloak
+    volumes:
+      - ./imports:/opt/jboss/keycloak/imports
+    environment:
+      KEYCLOAK_IMPORT: /opt/jboss/keycloak/imports/realm-export.json -Dkeycloak.profile.feature.upload_scripts=enabled
+      DB_VENDOR: POSTGRES
+      DB_ADDR: postgres
+      DB_DATABASE: keycl0ak
+      DB_USER: keycl0ak
+      DB_PASSWORD: password
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
