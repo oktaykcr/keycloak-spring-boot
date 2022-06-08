@@ -1,6 +1,10 @@
 # keycloak-spring-boot
 Keycloak authorization with some extra topics
 
+## OpenAPI Descriptions
+
+`http://localhost:8081/v3/api-docs/`
+
 ## Keycloak Client Configuration
 1. Create Realm
 ![1createRealm](https://user-images.githubusercontent.com/26169464/172070175-0e68c3e4-875c-4820-a456-6074d999db44.png)
