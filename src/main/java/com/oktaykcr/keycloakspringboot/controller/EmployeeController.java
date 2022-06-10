@@ -10,6 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
@@ -26,7 +29,7 @@ public class EmployeeController {
     }
 
     @PostMapping
-    private ApiResponse<EmployeeDto> create(@RequestBody EmployeeDto employeeDTO) {
+    private ApiResponse<EmployeeDto> create(@RequestBody @Valid EmployeeDto employeeDTO) {
         Employee employeeRequest = employeeMapper.dtoToEmployee(employeeDTO);
         Employee savedEmployee = employeeService.save(employeeRequest);
         EmployeeDto responseDto = employeeMapper.employeeToDto(savedEmployee);
@@ -34,7 +37,7 @@ public class EmployeeController {
     }
 
     @PutMapping
-    private ApiResponse<EmployeeDto> update(@RequestBody EmployeeDto employeeDTO) {
+    private ApiResponse<EmployeeDto> update(@RequestBody @Valid EmployeeDto employeeDTO) {
         Employee employeeRequest = employeeMapper.dtoToEmployee(employeeDTO);
         Employee updatedEmployee = employeeService.update(employeeRequest);
         EmployeeDto responseDto = employeeMapper.employeeToDto(updatedEmployee);
@@ -42,15 +45,15 @@ public class EmployeeController {
     }
 
     @GetMapping("{id}")
-    private ApiResponse<EmployeeDto> findById(@PathVariable String id) {
+    private ApiResponse<EmployeeDto> findById(@PathVariable @NotNull String id) {
         Employee byId = employeeService.findById(id);
 
         return ApiResponse.response(employeeMapper.employeeToDto(byId));
     }
 
     @GetMapping()
-    private ListResponse<EmployeeDto> list(@RequestParam Integer pageNumber,
-                                               @RequestParam Integer pageOffset) {
+    private ListResponse<EmployeeDto> list(@RequestParam @Min(0) Integer pageNumber,
+                                               @RequestParam @Min(1) Integer pageOffset) {
         ListResponse<Employee> employeeListResponse = employeeService.list(pageNumber, pageOffset);
         List<EmployeeDto> collect = employeeListResponse.getData().stream().map(employeeMapper::employeeToDto).toList();
 
@@ -58,7 +61,7 @@ public class EmployeeController {
     }
 
     @DeleteMapping(value = "{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable String id) {
+    public ResponseEntity<Void> deleteById(@PathVariable @NotNull String id) {
         employeeService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

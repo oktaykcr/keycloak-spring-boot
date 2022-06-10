@@ -1,11 +1,23 @@
 package com.oktaykcr.keycloakspringboot.dto;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
+
 public class EmployeeDto {
 
     private String id;
+
+    @Size(min = 5, max = 64)
     private String name;
+
+    @Size(min = 5, max = 255)
     private String address;
+
+    @Email
     private String email;
+
+    @Min(value = 1000)
     private Long salary;
 
     public String getId() {
