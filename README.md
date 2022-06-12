@@ -1,5 +1,18 @@
 # keycloak-spring-boot
-Keycloak authorization with some extra topics
+The aim of this project is to show how to implement Keycloak into Spring Boot and how to authenticate/authorize the user. Besides, I implemented basic CRUD logic using best practices (project structure, code quality). The project has also automatic docker image deployment through `jib-maven-plugin`.
+
+## Built Using
+- OpenJDK 18
+- Spring Boot 2.7.0
+  - starter-data-jpa
+  - starter-oauth2-resource-server
+  - starter-security
+  - starter-validation
+  - starter-web
+- PostgreSQL
+- testcontainers (1.17.2)
+- mapstruct (1.4.2.Final)
+- openapi
 
 ## OpenAPI Descriptions
 
